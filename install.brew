@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# This file uses Homebrew to make an educated guess.
+
+mumps_prefix=$(brew --prefix mumps)
+scalapack_libdir=$(brew --prefix scalapack)/lib
+
+# See if Mumps was built --with-scotch5
+with_scotch=$(brew info mumps | grep 'scotch5 ✔')
+if [[ -z "$with_scotch" ]]; then
+	scotch_libdir=
+	scotch_libs=
+else
+	scotch_libdir=$(brew --prefix scotch5)/lib
+	scotch_libs='-L$(scotch_libdir) -lptesmumps -lptscotch -lptscotcherr'
+fi
+
+# See if Mumps was built --with-openblas
+with_openblas=$(brew info mumps | grep 'openblas ✔')
+if [[ -z "$with_openblas" ]]; then
+	blas_libdir=
+	blas_libs='-lblas -llapack'
+else
+	blas_libdir=$(brew --prefix openblas)/lib
+  blas_libs='-L$(blas_libdir) -lopenblas'
+fi
+
+echo "mumps_prefix: $mumps_prefix"
+echo "scalapack_libdir: $scalapack_libdir"
+echo "scotch_libdir: $scotch_libdir"
+echo "scotch_libs: $scotch_libs"
+echo "blas_libdir: $blas_libdir"
+echo "blas_libs: $blas_libs"
+
+make mumps_prefix="$mumps_prefix" \
+     scalapack_libir="$scalapack_libdir" \
+     scotch_libdir="$scotch_libdir" \
+     scotch_libs="$scotch_libs" \
+     blas_libdir="$blas_libdir" \
+     blas_libs="$blas_libs" \
+     $@
+
