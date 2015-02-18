@@ -1,2 +1,2 @@
-mumps_simple version 0.1.
+mumps_simple version 0.2.
 February 18, 2015.
