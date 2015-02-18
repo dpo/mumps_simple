@@ -23,7 +23,7 @@ debug_flag = #-DJMUMPS_DEBUG
 
 ifeq ($(strip $(shell uname)),Darwin)
 	soname = dylib
-	makeso = libtool -dynamic -undefined dynamic_lookup -macosx_version_min 10.8 -install_name $(prefix)/lib/libmumps_simple.$(soname)
+	makeso = $(CC) -dynamiclib -undefined dynamic_lookup -Wl,-install_name -Wl,$(prefix)/lib/libmumps_simple.$(soname)
 else
 	soname = so
 	makeso = $(CC) -shared -Wl,-soname -Wl,libmumps_simple.$(soname)
