@@ -36,6 +36,8 @@ all: ${src:.c=.o}
 	$(makeso) $< -o libmumps_simple.$(soname) $(lib)
 
 install:
+	mkdir -p $(prefix)/lib
+	mkdir -p $(prefix)/include
 	cp libmumps_simple.$(soname) $(prefix)/lib
 	cp mumps_simple.h $(prefix)/include
 
