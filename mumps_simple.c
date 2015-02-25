@@ -898,8 +898,8 @@ void mumps_free_float(SMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
     Free( (*mumps)->sym_perm );
@@ -921,8 +921,8 @@ void mumps_free_double(DMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
     Free( (*mumps)->sym_perm );
@@ -944,8 +944,8 @@ void mumps_free_float_complex(CMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
     Free( (*mumps)->sym_perm );
@@ -967,8 +967,8 @@ void mumps_free_double_complex(ZMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
     Free( (*mumps)->sym_perm );
