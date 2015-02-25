@@ -6,13 +6,46 @@ mumps_prefix=$(brew --prefix mumps)
 scalapack_libdir=$(brew --prefix scalapack)/lib
 
 # See if Mumps was built --with-scotch5
-with_scotch=$(brew info mumps | grep 'scotch5 ✔')
-if [[ -z "$with_scotch" ]]; then
-	scotch_libdir=
-	scotch_libs=
+with_scotch5=$(brew info mumps | grep 'scotch5 ✔')
+if [[ -z "$with_scotch5" ]]; then
+
+  # See if Mumps was built --with-scotch
+  with_scotch=$(brew info mumps | grep 'scotch ✔')
+  if [[ -z "$with_scotch" ]]; then
+    scotch_libdir=
+    scotch_libs=
+  else
+    scotch_libdir=$(brew --prefix scotch)/lib
+    scotch_libs='-L$(scotch_libdir) -lptscotch -lptscotcherr -lscotch'
+  fi
 else
 	scotch_libdir=$(brew --prefix scotch5)/lib
 	scotch_libs='-L$(scotch_libdir) -lptesmumps -lptscotch -lptscotcherr'
+fi
+
+# See if Mumps was built --with-metis
+with_metis=$(brew info mumps | grep 'metis ✔')
+if [[ -z "$with_metis" ]]; then
+  metis_libdir=
+  metis_libs=
+else
+  metis_libdir=$(brew --prefix metis)/lib
+  metis_libs='-L$(metis_libdir) -lmetis'
+  [[ -z "$with_scotch5" ]] || scotch_libs="$scotch_libs -lscotchmetis"
+  [[ -z "$with_scotch" ]] || scotch_libs="$scotch_libs -lscotchmetis"
+fi
+
+# See if Mumps was built --with-parmetis
+with_parmetis=$(brew info mumps | grep 'parmetis ✔')
+if [[ -z "$with_parmetis" ]]; then
+  parmetis_libdir=
+  parmetis_libs=
+else
+  metis_libdir=$(brew --prefix metis)/lib
+  parmetis_libdir=$(brew --prefix parmetis)/lib
+  parmetis_libs='-L$(parmetis_libdir) -lparmetis -L$(metis_libdir) -lmetis'
+  [[ -z "$with_scotch5" ]] || scotch_libs="$scotch_libs -lscotchparmetis"
+  [[ -z "$with_scotch" ]] || scotch_libs="$scotch_libs -lscotchparmetis"
 fi
 
 # See if Mumps was built --with-openblas
@@ -29,6 +62,10 @@ echo "mumps_prefix: $mumps_prefix"
 echo "scalapack_libdir: $scalapack_libdir"
 echo "scotch_libdir: $scotch_libdir"
 echo "scotch_libs: $scotch_libs"
+echo "metis_libdir: $metis_libdir"
+echo "metis_libs: $metis_libs"
+echo "parmetis_libdir: $parmetis_libdir"
+echo "parmetis_libs: $parmetis_libs"
 echo "blas_libdir: $blas_libdir"
 echo "blas_libs: $blas_libs"
 
@@ -36,6 +73,10 @@ make mumps_prefix="$mumps_prefix" \
      scalapack_libir="$scalapack_libdir" \
      scotch_libdir="$scotch_libdir" \
      scotch_libs="$scotch_libs" \
+     metis_libdir="$metis_libdir" \
+     metis_libs="$metis_libs" \
+     parmetis_libdir="$parmetis_libdir" \
+     parmetis_libs="$parmetis_libs" \
      blas_libdir="$blas_libdir" \
      blas_libs="$blas_libs" \
      $@

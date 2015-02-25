@@ -170,7 +170,7 @@ void mumps_associate_matrix_float(void* jmumps, int n, int nz,
   SMUMPS_STRUC_C* pmumps = (SMUMPS_STRUC_C*)jmumps;
 
 #ifdef JMUMPS_DEBUG
-    printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
+  printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
 #endif
 
   pmumps->n  = n;
@@ -190,7 +190,7 @@ void mumps_associate_matrix_double(void* jmumps, int n, int nz,
   DMUMPS_STRUC_C* pmumps = (DMUMPS_STRUC_C*)jmumps;
 
 #ifdef JMUMPS_DEBUG
-    printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
+  printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
 #endif
 
   pmumps->n  = n;
@@ -210,7 +210,7 @@ void mumps_associate_matrix_float_complex(void* jmumps, int n, int nz,
   CMUMPS_STRUC_C* pmumps = (CMUMPS_STRUC_C*)jmumps;
 
 #ifdef JMUMPS_DEBUG
-    printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
+  printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
 #endif
 
   pmumps->n  = n;
@@ -230,7 +230,7 @@ void mumps_associate_matrix_double_complex(void* jmumps, int n, int nz,
   ZMUMPS_STRUC_C* pmumps = (ZMUMPS_STRUC_C*)jmumps;
 
 #ifdef JMUMPS_DEBUG
-    printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
+  printf("Associating matrix with MUMPS struct initialized at %p\n", pmumps);
 #endif
 
   pmumps->n  = n;
@@ -255,8 +255,8 @@ void mumps_factorize_float(void* jmumps) {
   smumps_c(pmumps);
 
 #ifdef JMUMPS_DEBUG
-    printf("MUMPS factorized a matrix of size %d with %d nonzeros\n",
-           pmumps->n, pmumps->nz);
+  printf("MUMPS factorized a matrix of size %d with %d nonzeros\n",
+          pmumps->n, pmumps->nz);
 #endif
 
     return;
@@ -270,8 +270,8 @@ void mumps_factorize_double(void* jmumps) {
   dmumps_c(pmumps);
 
 #ifdef JMUMPS_DEBUG
-    printf("MUMPS factorized a matrix of size %d with %d nonzeros\n",
-           pmumps->n, pmumps->nz);
+  printf("MUMPS factorized a matrix of size %d with %d nonzeros\n",
+         pmumps->n, pmumps->nz);
 #endif
 
     return;
@@ -324,6 +324,10 @@ void mumps_associate_rhs_float(void* jmumps, int nrhs, float* rhs) {
 void mumps_associate_rhs_double(void* jmumps, int nrhs, double* rhs) {
 
   DMUMPS_STRUC_C* pmumps = (DMUMPS_STRUC_C*)jmumps;
+
+#ifdef JMUMPS_DEBUG
+  printf("Associating rhs at %p\n", rhs);
+#endif
 
   pmumps->nrhs = nrhs;
   pmumps->lrhs = pmumps->n;
@@ -894,10 +898,11 @@ void mumps_free_float(SMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
+    Free( (*mumps)->schur);
     Free( (*mumps)->sym_perm );
     Free( (*mumps)->uns_perm );
     Free( (*mumps)->irhs_ptr);
@@ -917,10 +922,11 @@ void mumps_free_double(DMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
+    Free( (*mumps)->schur);
     Free( (*mumps)->sym_perm );
     Free( (*mumps)->uns_perm );
     Free( (*mumps)->irhs_ptr);
@@ -940,10 +946,11 @@ void mumps_free_float_complex(CMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
+    Free( (*mumps)->schur);
     Free( (*mumps)->sym_perm );
     Free( (*mumps)->uns_perm );
     Free( (*mumps)->irhs_ptr);
@@ -963,10 +970,11 @@ void mumps_free_double_complex(ZMUMPS_STRUC_C** mumps){
     Free( (*mumps)->eltvar );
     Free( (*mumps)->a_elt );
     Free( (*mumps)->perm_in );
-    Free( (*mumps)->colsca );
-    Free( (*mumps)->rowsca  );
+    /*Free( (*mumps)->colsca );*/
+    /*Free( (*mumps)->rowsca  );*/
     Free( (*mumps)->pivnul_list );
     Free( (*mumps)->listvar_schur );
+    Free( (*mumps)->schur);
     Free( (*mumps)->sym_perm );
     Free( (*mumps)->uns_perm );
     Free( (*mumps)->irhs_ptr);

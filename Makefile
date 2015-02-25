@@ -14,12 +14,18 @@ scalapack_libs   = -L$(scalapack_libdir) -lscalapack
 scotch_libdir =
 scotch_libs =
 
+metis_libdir =
+metis_libs =
+
+parmetis_libdir =
+parmetis_libs =
+
 blas_libdir =
 blas_libs = -lblas -llapack
 
 src = mumps_simple.c
-lib = $(mumps_libs) $(scotch_libs) $(blas_libs) $(scalapack_libs) -ldl
 debug_flag = #-DJMUMPS_DEBUG
+lib = $(mumps_libs) $(scotch5_libs) $(scotch_libs) $(metis_libs) $(parmetis_libs) $(blas_libs) $(scalapack_libs) -ldl
 
 ifeq ($(strip $(shell uname)),Darwin)
 	soname = dylib
